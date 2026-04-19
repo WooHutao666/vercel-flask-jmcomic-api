@@ -285,6 +285,9 @@ def get_album_info(item_id: int, impl="html", url=["18comic.vip"]):
         if str(e).find("请求重试全部失败") != -1:
             print("请求重试全部失败", str(e))
             return get_album_info(item_id, url=[])
+        if str(e).find("403") != -1 and str(e).find("ip地区禁止访问") != -1:
+            print("ip地区禁止访问", str(e))
+            return get_album_info(item_id, impl="api", url=[])
         return jsonify({"code": 500, "message": str(e)}), 500
 
 
